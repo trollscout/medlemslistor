@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+#apt-get update
+#apt-get install -y cron netcat
+#rm -r /var/lib/apt/lists/*
+
+#curl https://get.acme.sh | sh

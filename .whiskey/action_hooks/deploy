@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#set -eo pipefail
+
+python manage.py migrate --noinput
+
+#service cron start
+
+#sleep 30
+
+#/root/.acme.sh/acme.sh --test --debug --issue --standalone -d hej.apps.violaberg.nu

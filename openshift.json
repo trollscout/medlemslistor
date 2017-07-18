@@ -143,12 +143,6 @@
 						"github": {
 							"secret": "${GITHUB_WEBHOOK_SECRET}"
 						}
-					},
-					{
-						"type": "Generic",
-						"generic": {
-							"secret": "${GENERIC_WEBHOOK_SECRET}"
-						}
 					}
 				]
 			}
@@ -210,7 +204,16 @@
 										"memory": "${MEMORY_LIMIT}"
 									}
 								},
-								"env": []
+								"env": [
+				                  {
+				                    "name": "DROPBOX_KEY",
+				                    "value": "${DROPBOX_KEY}"
+				                  },
+				                  {
+				                    "name": "DJANGO_SECRET_KEY",
+				                    "value": "${DJANGO_SECRET_KEY}"
+				                  }
+								]
 							}
 						]
 					}
@@ -258,12 +261,18 @@
 			"generate": "expression",
 			"from": "[a-zA-Z0-9]{40}"
 		},
-		{
-			"name": "GENERIC_WEBHOOK_SECRET",
-			"displayName": "Generic Webhook Secret",
-			"description": "A secret string used to configure the Generic webhook.",
-			"generate": "expression",
-			"from": "[a-zA-Z0-9]{40}"
+	    {
+	      "name": "DJANGO_SECRET_KEY",
+	      "displayName": "Django Secret Key",
+	      "description": "Set this to a long random string.",
+	      "generate": "expression",
+	      "from": "[\\w]{50}"
+	    },
+    	{
+			"name": "DROPBOX_KEY",
+			"displayName": "Dropbox access key",
+			"description": "Set this to the value of the Dropbox access key.",
+			"required": true
 		}
 	]
 }
