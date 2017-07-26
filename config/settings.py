@@ -30,8 +30,9 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['dagliga-slagningar.apps.violaberg.nu', 'localhost']
+HOST_NAME = os.getenv('HOST_NAME','')
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [HOST_NAME, 'localhost']
 
 # Application definition
 
