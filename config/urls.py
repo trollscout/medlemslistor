@@ -16,11 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from listor.views import ladda_upp, ladda_ner_lista, ladda_ner_fil
+from listor.views import go
 
 urlpatterns = [
-    url(r'^ladda-upp', ladda_upp, name="ladda-upp"),
-    url(r'^ladda-ner-lista', ladda_ner_lista, name="ladda-ner-lista"),
-    url(r'^ladda-ner-fil/(?P<filnamn>.*)/$', ladda_ner_fil, name="ladda-ner-fil"),
-    url(r'^admin/', admin.site.urls),
+    url(r'^go', go, name="go"),
+#     url(r'^admin/', admin.site.urls),
 ]

@@ -210,6 +210,10 @@
 				                    "value": "${DROPBOX_KEY}"
 				                  },
 				                  {
+				                    "name": "HOST_NAME",
+				                    "value": "${APPLICATION_DOMAIN}"
+				                  },
+				                  {
 				                    "name": "DJANGO_SECRET_KEY",
 				                    "value": "${DJANGO_SECRET_KEY}"
 				                  }
