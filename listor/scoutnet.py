@@ -10,7 +10,7 @@ dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/
 loginurl = "https://www.scoutnet.se/login"
 auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','xxxxx')}
 
-def get_memdataX():
+def get_memdata():
     s = requests.Session()
     r = s.get(dataurl)
     if r.status_code != 200:
@@ -21,5 +21,5 @@ def get_memdataX():
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import json
-def get_memdata():
+def get_memdataX():
     return json.load(open(BASE_DIR+"/alla.json","r"))
