@@ -206,16 +206,24 @@
 								},
 								"env": [
 				                  {
-				                    "name": "DROPBOX_KEY",
-				                    "value": "${DROPBOX_KEY}"
-				                  },
-				                  {
 				                    "name": "HOST_NAME",
 				                    "value": "${APPLICATION_DOMAIN}"
 				                  },
 				                  {
 				                    "name": "DJANGO_SECRET_KEY",
 				                    "value": "${DJANGO_SECRET_KEY}"
+				                  },
+				                  {
+				                    "name": "SCOUTNET_UID",
+				                    "value": "${SCOUTNET_UID}"
+				                  },
+				                  {
+				                    "name": "SCOUTNET_PWD",
+				                    "value": "${SCOUTNET_PWD}"
+				                  },
+				                  {
+				                    "name": "DBX_OAUTHKEY",
+				                    "value": "${DBX_OAUTHKEY}"
 				                  }
 								]
 							}
@@ -266,17 +274,28 @@
 			"from": "[a-zA-Z0-9]{40}"
 		},
 	    {
-	      "name": "DJANGO_SECRET_KEY",
-	      "displayName": "Django Secret Key",
-	      "description": "Set this to a long random string.",
-	      "generate": "expression",
-	      "from": "[\\w]{50}"
+			"name": "DJANGO_SECRET_KEY",
+			"displayName": "Django Secret Key",
+			"description": "Set this to a long random string.",
+			"generate": "expression",
+			"from": "[\\w]{50}"
+	    },
+	    {
+			"name": "SCOUTNET_UID",
+			"displayName": "Scoutnet user ID",
+			"description": "Set this to the UID of the user getting the lists."
+	    },
+	    {
+			"name": "SCOUTNET_PWD",
+			"displayName": "Scoutnet user ID password",
+			"description": "Set this to the password of the user getting the lists.",
+			"required": true
 	    },
     	{
-			"name": "DROPBOX_KEY",
-			"displayName": "Dropbox access key",
-			"description": "Set this to the value of the Dropbox access key.",
-			"required": true
+			"name": "DBX_OAUTHKEY",
+			"displayName": "Dropbox oauth key",
+			"description": "Set this to the value of the Dropbox oauth key.",
+			"required": false
 		}
 	]
 }

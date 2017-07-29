@@ -6,9 +6,11 @@ Created on 7 apr. 2017
 @author: perhk
 '''
 
-from django.http import HttpResponse
+import os
 
-from .scoutnet import get_memdata
+# My only view
+
+from django.http import HttpResponse
 
 def go(request):
     memdata = get_memdata()['data']
@@ -25,8 +27,6 @@ def mk_listor(memdata):
 #     allepost(memdata)
     kontaktlista(memdata)
     telefonlista(memdata)
-
-from .dbx import save_file
 
 def avdelningslistor(memdata):
     def v(m,f):
@@ -46,7 +46,7 @@ def avdelningslistor(memdata):
             if v(m,'contact_alt_email') != "":
                 elista += namn+" (Extra) <"+v(m,'contact_alt_email')+">;\n"
         save_file(avd+".txt",elista.encode(encoding="utf-8", errors="strict"))
-             
+
 
 def allepost(memdata):
     def v(m,f):
@@ -71,7 +71,6 @@ def allepost(memdata):
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from openpyxl.writer.excel import save_virtual_workbook
-import io
 
 def kontaktlista(memdata):
     def v(m,f):
@@ -110,13 +109,12 @@ def kontaktlista(memdata):
                 ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
                 ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
                 ws.cell(row=r,column= 6).value = v(m,'email')
-                if avd != "Rover":
-                    ws.cell(row=r,column= 7).value = v(m,'contact_mothers_name')
-                    ws.cell(row=r,column= 8).value = v(m,'contact_mobile_mum')
-                    ws.cell(row=r,column= 9).value = v(m,'contact_email_mum')
-                    ws.cell(row=r,column=10).value = v(m,'contact_fathers_name')
-                    ws.cell(row=r,column=11).value = v(m,'contact_mobile_dad')
-                    ws.cell(row=r,column=12).value = v(m,'contact_email_dad')
+                ws.cell(row=r,column= 7).value = v(m,'contact_mothers_name')
+                ws.cell(row=r,column= 8).value = v(m,'contact_mobile_mum')
+                ws.cell(row=r,column= 9).value = v(m,'contact_email_mum')
+                ws.cell(row=r,column=10).value = v(m,'contact_fathers_name')
+                ws.cell(row=r,column=11).value = v(m,'contact_mobile_dad')
+                ws.cell(row=r,column=12).value = v(m,'contact_email_dad')
                 ws.cell(row=r,column=13).value = v(m,'contact_alt_email')
                 r += 1
         else:
@@ -136,6 +134,41 @@ def kontaktlista(memdata):
 
 def telefonlista(memdata):
     pass
+
+# Droxbox upload function
+
+import dropbox
+
+DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'P_f0hApputAAAAAAAAABxl2HC2JCkUP6lkYH3btQxjlhXT-Cve8xg-IRzNB4qJaq')
+DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
+
+def save_file(fname, data):
+        dbx = dropbox.Dropbox(DBX_OAUTHKEY)
+        dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
+
+# Scoutnet download function
+
+import requests
+
+dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/true/format/json"
+loginurl = "https://www.scoutnet.se/login"
+auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','xxxxx')}
+
+def get_memdata():
+    s = requests.Session()
+    r = s.get(dataurl)
+    if r.status_code != 200:
+        r = s.post(loginurl,data=auth)  # Need to login
+        if r.status_code != 200:
+            raise Exception('Bad Scoutnet credentials')
+    return r.json()
+
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# import json
+# def get_memdataX():
+#     return json.load(open(BASE_DIR+"/alla.json","r"))
+
+
 
 # contact_home_phone {'value': '087763327'}
 # prev_term_due_date {'value': '2016-10-31'}
