@@ -133,7 +133,30 @@ def kontaktlista(memdata):
     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
 
 def telefonlista(memdata):
-    pass
+    def v(m,f):
+        return memdata[m][f]['value'] if f in memdata[m] else ""
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Telefonlista"
+    memdata = sorted(memdata,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
+    header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Mamma mobil", "Pappa mobil"]
+    colsizes = [30,20,14,14,14,14]
+    for col in range(len(header)):
+        ws.cell(row=1,column=col+1).value = header[col]
+        ws.cell(row=1,column=col+1).font = Font(bold=True)
+        ws.cell(row=1,column=col+1).fill = PatternFill("solid", fgColor="FFFF00")
+        ws.column_dimensions[chr(65+col)].width = colsizes[col]
+    r = 2
+    for m in memdata:
+        ws.cell(row=r,column=1).value = v(m,'first_name')+" "+v(m,'last_name')
+        ws.cell(row=r,column=2).value = v(m,'unit')
+        ws.cell(row=r,column=3).value = v(m,'contact_home_phone')
+        ws.cell(row=r,column=4).value = v(m,'contact_mobile_phone')
+        ws.cell(row=r,column=5).value = v(m,'contact_mobile_mum')
+        ws.cell(row=r,column=6).value = v(m,'contact_email_dad')
+        r += 1
+    save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
 
 # Droxbox upload function
 
