@@ -139,7 +139,7 @@ def telefonlista(memdata):
     wb = Workbook()
     ws = wb.active
     ws.title = "Telefonlista"
-    memdata = sorted(memdata,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
+#     memdata = sorted(memdata,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
     header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Mamma mobil", "Pappa mobil"]
     colsizes = [30,20,14,14,14,14]
     for col in range(len(header)):
