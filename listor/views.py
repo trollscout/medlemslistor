@@ -156,7 +156,7 @@ def telefonlista(memdata):
         ws.cell(row=r,column=5).value = v(m,'contact_mobile_mum')
         ws.cell(row=r,column=6).value = v(m,'contact_email_dad')
         r += 1
-    save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
+#     save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
 
 # Droxbox upload function
 
