@@ -1,4 +1,4 @@
 Django==1.11
 django-debug-toolbar==1.8
 openpyxl==2.4.7
-dropbox
+dropbox==8.0.0

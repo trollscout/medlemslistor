@@ -23,8 +23,8 @@ def go(request):
 avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
 
 def mk_listor(memdata):
-#     avdelningslistor(memdata)
-#     allepost(memdata)
+    avdelningslistor(memdata)
+    allepost(memdata)
     kontaktlista(memdata)
     telefonlista(memdata)
 
