@@ -130,7 +130,7 @@ def kontaktlista(memdata):
                 r += 1
         ws = wb.create_sheet()
     wb.remove_sheet(ws)     # Remove empty sheet
-    save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
+#     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
 
 def telefonlista(memdata):
     def v(m,f):
