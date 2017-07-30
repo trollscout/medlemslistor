@@ -157,27 +157,34 @@ def telefonlista(memdata):
         ws.cell(row=r,column=5).value = v(m,'contact_mobile_mum')
         ws.cell(row=r,column=6).value = v(m,'contact_mobile_dad')
         r += 1
-    save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
+#     save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
 
 # Droxbox upload function
 
 import dropbox
-
+ 
+ 
 DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'P_f0hApputAAAAAAAAABxl2HC2JCkUP6lkYH3btQxjlhXT-Cve8xg-IRzNB4qJaq')
 DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
-
+ 
 def save_file(fname, data):
         dbx = dropbox.Dropbox(DBX_OAUTHKEY)
         dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
 
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# def save_file(fname,data):
+#     f = open(BASE_DIR+"/../"+fname,"wb")
+#     f.write(data)
+#     f.close()
+
 # Scoutnet download function
 
 import requests
-
+ 
 dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/true/format/json"
 loginurl = "https://www.scoutnet.se/login"
 auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','xxxxx')}
-
+ 
 def get_memdata():
     s = requests.Session()
     r = s.get(dataurl)
@@ -186,7 +193,7 @@ def get_memdata():
         if r.status_code != 200:
             raise Exception('Bad Scoutnet credentials')
     return r.json()
-# 
+ 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # import json
 # def get_memdata():
