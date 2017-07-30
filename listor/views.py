@@ -155,7 +155,7 @@ def telefonlista(memdata):
         ws.cell(row=r,column=3).value = v(m,'contact_home_phone')
         ws.cell(row=r,column=4).value = v(m,'contact_mobile_phone')
         ws.cell(row=r,column=5).value = v(m,'contact_mobile_mum')
-        ws.cell(row=r,column=6).value = v(m,'contact_email_dad')
+        ws.cell(row=r,column=6).value = v(m,'contact_mobile_dad')
         r += 1
     save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
 
