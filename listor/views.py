@@ -136,10 +136,11 @@ def telefonlista(memdata):
     def v(m,f):
         return memdata[m][f]['value'] if f in memdata[m] else ""
 
+    mlist = [m for m in memdata]
+    mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
     wb = Workbook()
     ws = wb.active
     ws.title = "Telefonlista"
-#     memdata = sorted(memdata,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
     header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Mamma mobil", "Pappa mobil"]
     colsizes = [30,20,14,14,14,14]
     for col in range(len(header)):
@@ -148,7 +149,7 @@ def telefonlista(memdata):
         ws.cell(row=1,column=col+1).fill = PatternFill("solid", fgColor="FFFF00")
         ws.column_dimensions[chr(65+col)].width = colsizes[col]
     r = 2
-    for m in memdata:
+    for m in mlist:
         ws.cell(row=r,column=1).value = v(m,'first_name')+" "+v(m,'last_name')
         ws.cell(row=r,column=2).value = v(m,'unit')
         ws.cell(row=r,column=3).value = v(m,'contact_home_phone')
@@ -156,7 +157,7 @@ def telefonlista(memdata):
         ws.cell(row=r,column=5).value = v(m,'contact_mobile_mum')
         ws.cell(row=r,column=6).value = v(m,'contact_email_dad')
         r += 1
-#     save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
+    save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
 
 # Droxbox upload function
 
@@ -185,10 +186,10 @@ def get_memdata():
         if r.status_code != 200:
             raise Exception('Bad Scoutnet credentials')
     return r.json()
-
+# 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # import json
-# def get_memdataX():
+# def get_memdata():
 #     return json.load(open(BASE_DIR+"/alla.json","r"))
 
 
