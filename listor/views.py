@@ -130,7 +130,7 @@ def kontaktlista(memdata):
                 r += 1
         ws = wb.create_sheet()
     wb.remove_sheet(ws)     # Remove empty sheet
-#     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
+    save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
 
 def telefonlista(memdata):
     def v(m,f):
@@ -157,7 +157,7 @@ def telefonlista(memdata):
         ws.cell(row=r,column=5).value = v(m,'contact_mobile_mum')
         ws.cell(row=r,column=6).value = v(m,'contact_mobile_dad')
         r += 1
-#     save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
+    save_file("Telefonlista.xlsx",save_virtual_workbook(wb))
 
 # Droxbox upload function
 
