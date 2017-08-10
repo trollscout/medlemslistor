@@ -164,7 +164,7 @@ def telefonlista(memdata):
 import dropbox
  
  
-DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'P_f0hApputAAAAAAAAABxl2HC2JCkUP6lkYH3btQxjlhXT-Cve8xg-IRzNB4qJaq')
+DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'NO DEFAULT!')
 DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
  
 def save_file(fname, data):
@@ -183,7 +183,7 @@ import requests
  
 dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/true/format/json"
 loginurl = "https://www.scoutnet.se/login"
-auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','xxxxx')}
+auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','NO DEFAULT!')}
  
 def get_memdata():
     s = requests.Session()
