@@ -23,7 +23,7 @@ def go(request):
 
 # Create lists
 
-avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
+avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover', 'Nya spårare att fördela']
 
 def mk_listor(memdata):
     avdelningslistor(memdata)
