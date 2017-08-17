@@ -10,11 +10,14 @@ import os
 
 # My only view
 
+import threading
 from django.http import HttpResponse
 
 def go(request):
     memdata = get_memdata()['data']
-    mk_listor(memdata)
+#     mk_listor(memdata)
+    t = threading.Thread(target=mk_listor, args=(memdata,))
+    t.start()
     resptext = "Loaded "+str(len(memdata))+" records!"
     return HttpResponse(resptext)
 
@@ -33,7 +36,7 @@ def avdelningslistor(memdata):
         return memdata[m][f]['value'] if f in memdata[m] else ""
 
     for avd in avdelningar:
-        mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1992-01-01"]
+        mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1993-01-01"]
         elista = ""
         for m in mlist:
             namn = v(m,'first_name')+" "+v(m,'last_name')
@@ -84,7 +87,7 @@ def kontaktlista(memdata):
         if avd != 'Ledare':
             mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1993-01-01"]
         else:
-            mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "1999-01-01" and memdata[m]['unit']['value'] != "Under avveckling" and memdata[m]['unit']['value'] != "bara_för_Jamboree17"]
+            mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "2000-01-01" and memdata[m]['unit']['value'] != "Under avveckling" and memdata[m]['unit']['value'] != "bara_för_Jamboree17"]
         mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
         ws.title = avd
         if avd != "Ledare":
