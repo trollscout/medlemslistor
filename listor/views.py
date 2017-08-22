@@ -81,7 +81,8 @@ def kontaktlista(memdata):
 
     wb = Workbook()
     ws = wb.active
-    a = list(avdelningar).append('Ledare')
+    a = list(avdelningar)
+    a.append('Ledare')
     for avd in a:
         if avd != 'Ledare':
             mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1993-01-01"]
