@@ -23,7 +23,7 @@ def go(request):
 
 # Create lists
 
-avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Nya spårare att fördela', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
+avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
 
 def mk_listor(memdata):
     avdelningslistor(memdata)
@@ -81,8 +81,7 @@ def kontaktlista(memdata):
 
     wb = Workbook()
     ws = wb.active
-    a = list(avdelningar)
-    a.append('Ledare')
+    a = list(avdelningar).append('Ledare')
     for avd in a:
         if avd != 'Ledare':
             mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1993-01-01"]
