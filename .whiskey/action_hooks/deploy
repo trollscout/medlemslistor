@@ -4,5 +4,8 @@
 
 python manage.py migrate --noinput
 
+# Temp fix
+(umask 0; chmod +w /app/db/db.sqlite3)
+
 #service cron start
 
