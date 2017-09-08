@@ -24,11 +24,13 @@ def go(request):
 # Create lists
 
 avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
+grenar = {'Spårare':['Sagodjuren', 'Husdjuren', 'Gosedjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
 
 def mk_listor(memdata):
     avdelningslistor(memdata)
     allepost(memdata)
     kontaktlista(memdata)
+    ledarlista(memdata)
     telefonlista(memdata)
 
 def avdelningslistor(memdata):
@@ -135,6 +137,35 @@ def kontaktlista(memdata):
     wb.remove_sheet(ws)     # Remove empty sheet
     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
 
+def ledarlista(memdata):
+    def v(m,f):
+        return memdata[m][f]['value'] if f in memdata[m] else ""
+
+    wb = Workbook()
+    ws = wb.active
+    for gren in ['Spårare','Upptäckare','Äventyrare','Utmanare']:
+        ws.title = gren
+        header = ["Namn", "Avdelning", "Mobiltelefon", "E-post"]
+        colsizes = [30,20,14,35]
+        for col in range(len(header)):
+            ws.cell(row=1,column=col+1).value = header[col]
+            ws.cell(row=1,column=col+1).font = Font(bold=True)
+            ws.cell(row=1,column=col+1).fill = PatternFill("solid", fgColor="FFFF00")
+            ws.column_dimensions[chr(65+col)].width = colsizes[col]
+        r = 2
+        for avd in grenar[gren]:
+            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] < "2000-01-01"]
+            mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
+            for m in mlist:
+                ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
+                ws.cell(row=r,column= 2).value = v(m,'unit')
+                ws.cell(row=r,column= 3).value = v(m,'contact_mobile_phone')
+                ws.cell(row=r,column= 4).value = v(m,'email')
+                r += 1
+        ws = wb.create_sheet()
+    wb.remove_sheet(ws)     # Remove empty sheet
+    save_file("Avdelningsledarlista.xlsx",save_virtual_workbook(wb))
+
 def telefonlista(memdata):
     def v(m,f):
         return memdata[m][f]['value'] if f in memdata[m] else ""
@@ -165,18 +196,17 @@ def telefonlista(memdata):
 # Droxbox upload function
 
 import dropbox
- 
- 
+
 DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'NO DEFAULT!')
 DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
- 
+  
 def save_file(fname, data):
         dbx = dropbox.Dropbox(DBX_OAUTHKEY)
         dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
 
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # def save_file(fname,data):
-#     f = open(BASE_DIR+"/../"+fname,"wb")
+#     f = open(BASE_DIR+"/../TEMP/"+fname,"wb")
 #     f.write(data)
 #     f.close()
 
@@ -187,7 +217,7 @@ import requests
 dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/true/format/json"
 loginurl = "https://www.scoutnet.se/login"
 auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','NO DEFAULT!')}
- 
+  
 def get_memdata():
     s = requests.Session()
     r = s.get(dataurl)
@@ -201,35 +231,5 @@ def get_memdata():
 # import json
 # def get_memdata():
 #     return json.load(open(BASE_DIR+"/alla.json","r"))
-
-
-
-# contact_home_phone {'value': '087763327'}
-# prev_term_due_date {'value': '2016-10-31'}
-# contact_mobile_mum {'value': '0722333777'}
-# first_name {'value': 'Veronica'}
-# prev_term {'value': 'Betalt', 'raw_value': 'paid'}
-# contact_fathers_name {'value': 'Håkan Persson'}
-# unit {'value': 'Slow Fox', 'raw_value': '8907'}
-# current_term {'value': 'Betalt', 'raw_value': 'paid'}
-# created_at {'value': '2011-11-05'}
-# email {'value': 'veronica@violaberg.nu'}
-# date_of_birth {'value': '2002-01-02'}
-# contact_mobile_dad {'value': '0702178177'}
-# country {'value': 'Sverige'}
-# last_name {'value': 'Ekenberg'}
-# ssno {'value': '20020102-1904'}
-# sex {'value': 'Kvinna', 'raw_value': '2'}
-# member_no {'value': '3230994'}
-# contact_mobile_phone {'value': '0767994483'}
-# address_1 {'value': 'Violabergsvägen 4'}
-# group {'value': 'Trollbäckens scoutkår', 'raw_value': '784'}
-# status {'value': 'Aktiv', 'raw_value': '2'}
-# confirmed_at {'value': '2014-08-20'}
-# current_term_due_date {'value': '2017-03-31'}
-# postcode {'value': '13668'}
-# contact_email_mum {'value': 'eva@violaberg.nu'}
-# contact_mothers_name {'value': 'Eva Ekenberg'}
-# contact_email_dad {'value': 'hakan@violaberg.nu'}
-# town {'value': 'Vendelsö'}
+# }
 
