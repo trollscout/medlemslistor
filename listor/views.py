@@ -146,7 +146,7 @@ def ledarlista(memdata):
     for gren in ['Spårare','Upptäckare','Äventyrare','Utmanare']:
         ws.title = gren
         header = ["Namn", "Avdelning", "Mobiltelefon", "E-post"]
-        colsizes = [30,20,14,35]
+        colsizes = [30,15,14,35]
         for col in range(len(header)):
             ws.cell(row=1,column=col+1).value = header[col]
             ws.cell(row=1,column=col+1).font = Font(bold=True)
