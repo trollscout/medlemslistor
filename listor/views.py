@@ -13,7 +13,7 @@ import os
 import threading
 from django.http import HttpResponse
 
-def go(request):
+def load(request):
     memdata = get_memdata()['data']
 #     mk_listor(memdata)
     t = threading.Thread(target=mk_listor, args=(memdata,))
