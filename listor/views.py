@@ -77,7 +77,7 @@ def allepost(memdata):
     def v(m,f):
         return memdata[m][f]['value'] if f in memdata[m] else ""
 
-    mlist = [m for m in memdata if memdata[m]['unit']['value'] != "Under avveckling" and memdata[m]['unit']['value'] != "bara_för_Jamboree17"]
+    mlist = [m for m in memdata if memdata[m]['unit']['value'] != "Under avveckling"]
     elist = set()
     for m in mlist:
         if v(m,'email') != "": 
