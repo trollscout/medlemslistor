@@ -28,6 +28,7 @@ grenar = {'Spårare':['Sagodjuren', 'Husdjuren', 'Gosedjuren'], 'Upptäckare':['
 
 def mk_listor(memdata):
     avdelningslistor(memdata)
+    grenlistor(memdata)
     allepost(memdata)
     kontaktlista(memdata)
     ledarlista(memdata)
@@ -52,6 +53,25 @@ def avdelningslistor(memdata):
                 elista += namn+" (Extra) <"+v(m,'contact_alt_email')+">;\n"
         save_file(avd+".txt",elista.encode(encoding="utf-8", errors="strict"))
 
+def grenlistor(memdata):
+    def v(m,f):
+        return memdata[m][f]['value'] if f in memdata[m] else ""
+
+    for gren in ['Spårare','Upptäckare','Äventyrare']:
+        elista = ""
+        for avd in grenar[gren]:
+            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd]
+            for m in mlist:
+                namn = v(m,'first_name')+" "+v(m,'last_name')
+                if v(m,'email') != "": 
+                    elista += namn+" <"+v(m,'email')+">;\n"
+                if v(m,'contact_email_mum') != "" and v(m,'contact_email_mum') != v(m,'email'):
+                    elista += v(m,'contact_mothers_name')+" ("+namn+"s mamma) <"+v(m,'contact_email_mum')+">;\n"
+                if v(m,'contact_email_dad') != "" and v(m,'contact_email_dad') != v(m,'email'):
+                    elista += v(m,'contact_fathers_name')+" ("+namn+"s pappa) <"+v(m,'contact_email_dad')+">;\n"
+                if v(m,'contact_alt_email') != "":
+                    elista += namn+" (Extra) <"+v(m,'contact_alt_email')+">;\n"
+        save_file(gren+".txt",elista.encode(encoding="utf-8", errors="strict"))
 
 def allepost(memdata):
     def v(m,f):
