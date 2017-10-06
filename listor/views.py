@@ -13,7 +13,7 @@ import os
 import threading
 from django.http import HttpResponse
 
-def go(request):
+def load(request):
     memdata = get_memdata()['data']
 #     mk_listor(memdata)
     t = threading.Thread(target=mk_listor, args=(memdata,))
@@ -39,7 +39,7 @@ def avdelningslistor(memdata):
         return memdata[m][f]['value'] if f in memdata[m] else ""
 
     for avd in avdelningar:
-        mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1993-01-01"]
+        mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd]
         elista = ""
         for m in mlist:
             namn = v(m,'first_name')+" "+v(m,'last_name')

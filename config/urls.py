@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from listor.views import go
+from listor.views import load
 
 urlpatterns = [
-    url(r'^go', go, name="go"),
+    url(r'^load', load, name="load"),
+    url(r'^go', load, name="load"),
 #     url(r'^admin/', admin.site.urls),
 ]
