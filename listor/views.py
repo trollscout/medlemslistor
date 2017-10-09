@@ -107,9 +107,9 @@ def kontaktlista(memdata):
     a.append('Ledare')
     for avd in a:
         if avd != 'Ledare':
-            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1993-01-01"]
+            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1994-01-01"]
         else:
-            mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "2000-01-01" and memdata[m]['unit']['value'] != "Under avveckling" and memdata[m]['unit']['value'] != "bara_för_Jamboree17"]
+            mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "2000-01-01" and memdata[m]['unit']['value'] != "Under avveckling"]
         mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
         ws.title = avd
         if avd != "Ledare":
