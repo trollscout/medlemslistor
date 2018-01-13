@@ -113,7 +113,7 @@ def kontaktlista(memdata):
         mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
         ws.title = avd
         if avd != "Ledare":
-            header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Mamma namn", "Mamma mobil", "Mamma e-post", "Pappa namn", "Pappa mobil", "Pappa e-post", "Extra e-epost"]   
+            header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
             colsizes = [30,8,40,14,14,35,30,14,35,30,14,35,35]
         else:
             header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
@@ -195,7 +195,7 @@ def telefonlista(memdata):
     wb = Workbook()
     ws = wb.active
     ws.title = "Telefonlista"
-    header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Mamma mobil", "Pappa mobil"]
+    header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Anhörig1 mobil", "Anhörig2 mobil"]
     colsizes = [30,20,14,14,14,14]
     for col in range(len(header)):
         ws.cell(row=1,column=col+1).value = header[col]
