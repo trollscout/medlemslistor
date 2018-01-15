@@ -114,7 +114,7 @@ def kontaktlista(memdata):
         ws.title = avd
         if avd != "Ledare":
             header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
-            colsizes = [30,8,40,14,14,35,30,14,35,30,14,35,35]
+            colsizes = [30,8,40,14,14,35,30,18,35,30,18,35,35]
         else:
             header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
             colsizes = [30,20,40,14,14,35,35]
@@ -196,7 +196,7 @@ def telefonlista(memdata):
     ws = wb.active
     ws.title = "Telefonlista"
     header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Anhörig1 mobil", "Anhörig2 mobil"]
-    colsizes = [30,20,14,14,14,14]
+    colsizes = [30,20,14,14,18,18]
     for col in range(len(header)):
         ws.cell(row=1,column=col+1).value = header[col]
         ws.cell(row=1,column=col+1).font = Font(bold=True)
