@@ -66,9 +66,9 @@ def grenlistor(memdata):
                 if v(m,'email') != "": 
                     elista += namn+" <"+v(m,'email')+">;\n"
                 if v(m,'contact_email_mum') != "" and v(m,'contact_email_mum') != v(m,'email'):
-                    elista += v(m,'contact_mothers_name')+" ("+namn+"s mamma) <"+v(m,'contact_email_mum')+">;\n"
+                    elista += v(m,'contact_mothers_name')+" ("+namn+"s anhörig) <"+v(m,'contact_email_mum')+">;\n"
                 if v(m,'contact_email_dad') != "" and v(m,'contact_email_dad') != v(m,'email'):
-                    elista += v(m,'contact_fathers_name')+" ("+namn+"s pappa) <"+v(m,'contact_email_dad')+">;\n"
+                    elista += v(m,'contact_fathers_name')+" ("+namn+"s anhörig) <"+v(m,'contact_email_dad')+">;\n"
                 if v(m,'contact_alt_email') != "":
                     elista += namn+" (Extra) <"+v(m,'contact_alt_email')+">;\n"
         save_file(gren+".txt",elista.encode(encoding="utf-8", errors="strict"))
@@ -114,7 +114,7 @@ def kontaktlista(memdata):
         ws.title = avd
         if avd != "Ledare":
             header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
-            colsizes = [30,8,40,14,14,35,30,18,35,30,18,35,35]
+            colsizes = [30,8,40,14,14,35,30,17,35,30,17,35,35]
         else:
             header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
             colsizes = [30,20,40,14,14,35,35]
@@ -196,7 +196,7 @@ def telefonlista(memdata):
     ws = wb.active
     ws.title = "Telefonlista"
     header = ["Namn", "Avdelning", "Hemtelefon", "Mobiltelefon", "Anhörig1 mobil", "Anhörig2 mobil"]
-    colsizes = [30,20,14,14,18,18]
+    colsizes = [30,20,14,14,17,17]
     for col in range(len(header)):
         ws.cell(row=1,column=col+1).value = header[col]
         ws.cell(row=1,column=col+1).font = Font(bold=True)
