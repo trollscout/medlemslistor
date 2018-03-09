@@ -46,9 +46,9 @@ def avdelningslistor(memdata):
             if v(m,'email') != "": 
                 elista += namn+" <"+v(m,'email')+">;\n"
             if v(m,'contact_email_mum') != "" and v(m,'contact_email_mum') != v(m,'email'):
-                elista += v(m,'contact_mothers_name')+" ("+namn+"s mamma) <"+v(m,'contact_email_mum')+">;\n"
+                elista += v(m,'contact_mothers_name')+" ("+namn+"s anhörig) <"+v(m,'contact_email_mum')+">;\n"
             if v(m,'contact_email_dad') != "" and v(m,'contact_email_dad') != v(m,'email'):
-                elista += v(m,'contact_fathers_name')+" ("+namn+"s pappa) <"+v(m,'contact_email_dad')+">;\n"
+                elista += v(m,'contact_fathers_name')+" ("+namn+"s anhörig) <"+v(m,'contact_email_dad')+">;\n"
             if v(m,'contact_alt_email') != "":
                 elista += namn+" (Extra) <"+v(m,'contact_alt_email')+">;\n"
         save_file(avd+".txt",elista.encode(encoding="utf-8", errors="strict"))
