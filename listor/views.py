@@ -114,7 +114,7 @@ def kontaktlista(memdata):
         ws.title = avd
         if avd != "Ledare":
             header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
-            colsizes = [30,8,40,14,14,35,30,17,35,30,17,35,35]
+            colsizes = [30,7,40,14,14,35,30,17,35,30,17,35,35]
         else:
             header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
             colsizes = [30,20,40,14,14,35,35]
@@ -129,7 +129,8 @@ def kontaktlista(memdata):
             for m in mlist:
                 ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
                 fodd = v(m,'date_of_birth')
-                ws.cell(row=r,column= 2).value = fodd[2:4]+fodd[5:7]+fodd[8:10]
+#                 ws.cell(row=r,column= 2).value = fodd[2:4]+fodd[5:7]+fodd[8:10]
+                ws.cell(row=r,column= 2).value = "20"+fodd[2:4] if avd != "Rover" else "19"+fodd[2:4]   # Very ugly fix...
                 ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
                 ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
                 ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
