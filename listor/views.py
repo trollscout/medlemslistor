@@ -23,8 +23,10 @@ def load(request):
 
 # Create lists
 
-avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
-grenar = {'Spårare':['Sagodjuren', 'Husdjuren', 'Gosedjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
+# avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
+# grenar = {'Spårare':['Sagodjuren', 'Husdjuren', 'Gosedjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
+avdelningar = ['Sagodjuren', 'Husdjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox']
+grenar = {'Spårare':['Sagodjuren', 'Husdjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
 
 def mk_listor(memdata):
     avdelningslistor(memdata)
@@ -33,6 +35,18 @@ def mk_listor(memdata):
     kontaktlista(memdata)
     ledarlista(memdata)
     telefonlista(memdata)
+    wsj19lista(memdata)
+#     testlista(memdata)
+
+def testlista(memdata):
+    def v(m,f):
+        return memdata[m][f]['value'] if f in memdata[m] else ""
+
+    mlist = [m for m in memdata]
+    elista = ""
+    for m in mlist:
+        elista += v(m,'member_no')+"\n"
+    save_file("testlista.txt",elista.encode(encoding="utf-8", errors="strict"))
 
 def avdelningslistor(memdata):
     def v(m,f):
@@ -92,6 +106,29 @@ def allepost(memdata):
     for l in elist:
         data += l+";\n"
     save_file("Alla.txt",data.encode(encoding="utf-8", errors="strict"))
+
+def wsj19lista(memdata):
+    def v(m,f):
+        return memdata[m][f]['value'] if f in memdata[m] else ""
+
+    deltlist = ["2001383","3209236","3209818","3223010","3224174","3225004","3225577","3227897","3230994","3231772",
+                "3232356","3234094","3234250","3235445","3236796","3242159","3249086","3249088","3249444","3254565",
+                "3261824","3262806","3273751","3275149","3276352","3280061","3287727","3291282","3291638"]
+    
+    elist = set()
+    for m in deltlist:
+        if v(m,'email') != "": 
+            elist.add(v(m,'email'))
+        if v(m,'contact_email_mum') != "" :
+            elist.add(v(m,'contact_email_mum'))
+        if v(m,'contact_email_dad') != "":
+            elist.add(v(m,'contact_email_dad'))
+        if v(m,'contact_alt_email') != "":
+            elist.add(v(m,'contact_alt_email'))
+    data = ""
+    for l in elist:
+        data += l+";\n"
+    save_file("wsj19.txt",data.encode(encoding="utf-8", errors="strict"))
 
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
@@ -155,7 +192,8 @@ def kontaktlista(memdata):
                 ws.cell(row=r,column= 7).value = v(m,'contact_alt_email')
                 r += 1
         ws = wb.create_sheet()
-    wb.remove_sheet(ws)     # Remove empty sheet
+#     wb.remove_sheet(ws)     # Remove empty sheet
+    wb.remove(ws)     # Remove empty sheet
     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
 
 def ledarlista(memdata):
@@ -184,7 +222,8 @@ def ledarlista(memdata):
                 ws.cell(row=r,column= 4).value = v(m,'email')
                 r += 1
         ws = wb.create_sheet()
-    wb.remove_sheet(ws)     # Remove empty sheet
+#     wb.remove_sheet(ws)     # Remove empty sheet
+    wb.remove(ws)     # Remove empty sheet
     save_file("Avdelningsledarlista.xlsx",save_virtual_workbook(wb))
 
 def telefonlista(memdata):
