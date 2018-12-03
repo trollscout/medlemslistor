@@ -259,11 +259,18 @@ import dropbox
 
 DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'NO DEFAULT!')
 DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
-  
-def save_file(fname, data):
-        dbx = dropbox.Dropbox(DBX_OAUTHKEY)
-        dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
+# GDRIVE_BASEDIR = "1HGb1JHNFx5-GxrTbzyK7RpQr5DID8FXS"
+AVDELNINGSDOKUMENT_ID = "0B4TmjLu89np8NkRoLWd3VVU2ZUE"
 
+from .gdrive import GDrive
+import json
+
+def save_file(fname, data):
+    dbx = dropbox.Dropbox(DBX_OAUTHKEY)
+    dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
+    gservice = GDrive(json.loads(os.getenv("service_account_info", "")))
+    epostlist_dir = gservice.find_file(AVDELNINGSDOKUMENT_ID,"Aktuella kontakt- och e-postlistor")[0]['id']
+    gservice.write_file(fname,epostlist_dir,data)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # def save_file(fname,data):
 #     f = open(BASE_DIR+"/../TEMP/"+fname,"wb")
@@ -273,19 +280,26 @@ def save_file(fname, data):
 # Scoutnet download function
 
 import requests
- 
-dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/true/format/json"
-loginurl = "https://www.scoutnet.se/login"
-auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','NO DEFAULT!')}
-  
+
 def get_memdata():
+    dataurl = "https://{authkey}@www.scoutnet.se/api/group/memberlist"
+    auth = os.getenv('scoutnet_apikey','NO DEFAULT!')
     s = requests.Session()
-    r = s.get(dataurl)
-    if r.status_code != 200:
-        r = s.post(loginurl,data=auth)  # Need to login
-        if r.status_code != 200:
-            raise Exception('Bad Scoutnet credentials')
+    r = s.get(dataurl.format(authkey=auth))
     return r.json()
+
+# dataurl = "https://www.scoutnet.se/reports/groups/members/group_id/784/download/true/format/json"
+# loginurl = "https://www.scoutnet.se/login"
+# auth = {'signin[username]': os.getenv('SCOUTNET_UID','hakan@violaberg.nu'), 'signin[password]': os.getenv('SCOUTNET_PWD','NO DEFAULT!')}
+#   
+# def get_memdata():
+#     s = requests.Session()
+#     r = s.get(dataurl)
+#     if r.status_code != 200:
+#         r = s.post(loginurl,data=auth)  # Need to login
+#         if r.status_code != 200:
+#             raise Exception('Bad Scoutnet credentials')
+#     return r.json()
  
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # import json
