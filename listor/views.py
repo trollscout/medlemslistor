@@ -266,8 +266,9 @@ from .gdrive import GDrive
 import json
 
 def save_file(fname, data):
-    dbx = dropbox.Dropbox(DBX_OAUTHKEY)
-    dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
+    # NO MORE DROPBOX!!!
+#     dbx = dropbox.Dropbox(DBX_OAUTHKEY)
+#     dbx.files_upload(data, DBX_BASEDIR+fname, dropbox.files.WriteMode.overwrite, mute=True)
     gservice = GDrive(json.loads(os.getenv("service_account_info", "")))
     epostlist_dir = gservice.find_file(AVDELNINGSDOKUMENT_ID,"Aktuella kontakt- och e-postlistor")[0]['id']
     gservice.write_file(fname,epostlist_dir,data)
