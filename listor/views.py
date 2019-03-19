@@ -25,7 +25,7 @@ def load(request):
 
 # avdelningar = ['Sagodjuren', 'Husdjuren', 'Gosedjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox', 'Rover']
 # grenar = {'Spårare':['Sagodjuren', 'Husdjuren', 'Gosedjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
-avdelningar = ['Sagodjuren', 'Husdjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox']
+avdelningar = ['Småkrypen','Sagodjuren', 'Husdjuren', 'Fabeldjuren', 'Skogsdjuren', 'Urdjuren', 'Rovdjuren', 'Slow Fox']
 grenar = {'Spårare':['Sagodjuren', 'Husdjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
 
 def mk_listor(memdata):
@@ -36,7 +36,7 @@ def mk_listor(memdata):
     ledarlista(memdata)
     telefonlista(memdata)
     wsj19lista(memdata)
-#     testlista(memdata)
+# #     testlista(memdata)
 
 def testlista(memdata):
     def v(m,f):
@@ -140,61 +140,128 @@ def kontaktlista(memdata):
 
     wb = Workbook()
     ws = wb.active
-    a = list(avdelningar)
-    a.append('Ledare')
-    for avd in a:
-        if avd != 'Ledare':
-            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1994-01-01"]
+    for avd in avdelningar:
+        if avd == 'Småkrypen':
+            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd]
         else:
-            mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "2000-01-01" and memdata[m]['unit']['value'] != "Under avveckling"]
+            mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1994-01-01"]
         mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
         ws.title = avd
-        if avd != "Ledare":
-            header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
-            colsizes = [30,7,40,14,14,35,30,17,35,30,17,35,35]
-        else:
-            header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
-            colsizes = [30,20,40,14,14,35,35]
+        header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
+        colsizes = [30,7,40,14,14,35,30,17,35,30,17,35,35]
         for col in range(len(header)):
             ws.cell(row=1,column=col+1).value = header[col]
             ws.cell(row=1,column=col+1).font = Font(bold=True)
             ws.cell(row=1,column=col+1).fill = PatternFill("solid", fgColor="FFFF00")
             ws.column_dimensions[chr(65+col)].width = colsizes[col]
     
-        if avd != "Ledare":
-            r = 2
-            for m in mlist:
-                ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
-                fodd = v(m,'date_of_birth')
-#                 ws.cell(row=r,column= 2).value = fodd[2:4]+fodd[5:7]+fodd[8:10]
-                ws.cell(row=r,column= 2).value = "20"+fodd[2:4] if avd != "Rover" else "19"+fodd[2:4]   # Very ugly fix...
-                ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
-                ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
-                ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
-                ws.cell(row=r,column= 6).value = v(m,'email')
-                ws.cell(row=r,column= 7).value = v(m,'contact_mothers_name')
-                ws.cell(row=r,column= 8).value = v(m,'contact_mobile_mum')
-                ws.cell(row=r,column= 9).value = v(m,'contact_email_mum')
-                ws.cell(row=r,column=10).value = v(m,'contact_fathers_name')
-                ws.cell(row=r,column=11).value = v(m,'contact_mobile_dad')
-                ws.cell(row=r,column=12).value = v(m,'contact_email_dad')
-                ws.cell(row=r,column=13).value = v(m,'contact_alt_email')
-                r += 1
-        else:
-            r = 2
-            for m in mlist:
-                ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
-                ws.cell(row=r,column= 2).value = v(m,'unit')
-                ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
-                ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
-                ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
-                ws.cell(row=r,column= 6).value = v(m,'email')
-                ws.cell(row=r,column= 7).value = v(m,'contact_alt_email')
-                r += 1
+        r = 2
+        for m in mlist:
+            ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
+            fodd = v(m,'date_of_birth')
+#             ws.cell(row=r,column= 2).value = "20"+fodd[2:4] if avd != "Småkrypen" else "19"+fodd[2:4]   # Very ugly fix...
+            ws.cell(row=r,column= 2).value = fodd[:4] if fodd > "2000-01-01" else ""
+            ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
+            ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
+            ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
+            ws.cell(row=r,column= 6).value = v(m,'email')
+            ws.cell(row=r,column= 7).value = v(m,'contact_mothers_name')
+            ws.cell(row=r,column= 8).value = v(m,'contact_mobile_mum')
+            ws.cell(row=r,column= 9).value = v(m,'contact_email_mum')
+            ws.cell(row=r,column=10).value = v(m,'contact_fathers_name')
+            ws.cell(row=r,column=11).value = v(m,'contact_mobile_dad')
+            ws.cell(row=r,column=12).value = v(m,'contact_email_dad')
+            ws.cell(row=r,column=13).value = v(m,'contact_alt_email')
+            r += 1
         ws = wb.create_sheet()
-#     wb.remove_sheet(ws)     # Remove empty sheet
-    wb.remove(ws)     # Remove empty sheet
+
+# Ledare
+    mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "2000-01-01" and memdata[m]['unit']['value'] not in ["Under avveckling","Småkrypen"]]
+    mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
+    ws.title = 'Ledare'
+    header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
+    colsizes = [30,20,40,14,14,35,35]
+    for col in range(len(header)):
+        ws.cell(row=1,column=col+1).value = header[col]
+        ws.cell(row=1,column=col+1).font = Font(bold=True)
+        ws.cell(row=1,column=col+1).fill = PatternFill("solid", fgColor="FFFF00")
+        ws.column_dimensions[chr(65+col)].width = colsizes[col]
+    r = 2
+    for m in mlist:
+        ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
+        ws.cell(row=r,column= 2).value = v(m,'unit')
+        ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
+        ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
+        ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
+        ws.cell(row=r,column= 6).value = v(m,'email')
+        ws.cell(row=r,column= 7).value = v(m,'contact_alt_email')
+        r += 1
+
     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
+
+
+
+# def kontaktlista(memdata):
+#     def v(m,f):
+#         return memdata[m][f]['value'] if f in memdata[m] else ""
+# 
+#     wb = Workbook()
+#     ws = wb.active
+#     a = list(avdelningar)
+#     a.append('Ledare')
+#     for avd in a:
+#         if avd != 'Ledare':
+#             mlist = [m for m in memdata if memdata[m]['unit']['value'] == avd and memdata[m]['date_of_birth']['value'] > "1994-01-01"]
+#         else:
+#             mlist = [m for m in memdata if memdata[m]['date_of_birth']['value'] < "2000-01-01" and memdata[m]['unit']['value'] != "Under avveckling"]
+#         mlist = sorted(mlist,key=lambda m: v(m,'first_name')+" "+v(m,'last_name'))
+#         ws.title = avd
+#         if avd != "Ledare":
+#             header = ["Namn", "Född", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Anhörig1 namn", "Anhörig1 mobil", "Anhörig1 e-post", "Anhörig2 namn", "Anhörig2 mobil", "Anhörig2 e-post", "Extra e-post"]   
+#             colsizes = [30,7,40,14,14,35,30,17,35,30,17,35,35]
+#         else:
+#             header = ["Namn", "Avdelning", "Adress", "Hemtelefon", "Mobiltelefon", "E-post", "Extra e-epost"]   
+#             colsizes = [30,20,40,14,14,35,35]
+#         for col in range(len(header)):
+#             ws.cell(row=1,column=col+1).value = header[col]
+#             ws.cell(row=1,column=col+1).font = Font(bold=True)
+#             ws.cell(row=1,column=col+1).fill = PatternFill("solid", fgColor="FFFF00")
+#             ws.column_dimensions[chr(65+col)].width = colsizes[col]
+#     
+#         if avd != "Ledare":
+#             r = 2
+#             for m in mlist:
+#                 ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
+#                 fodd = v(m,'date_of_birth')
+# #                 ws.cell(row=r,column= 2).value = fodd[2:4]+fodd[5:7]+fodd[8:10]
+#                 ws.cell(row=r,column= 2).value = "20"+fodd[2:4] if avd != "Rover" else "19"+fodd[2:4]   # Very ugly fix...
+#                 ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
+#                 ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
+#                 ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
+#                 ws.cell(row=r,column= 6).value = v(m,'email')
+#                 ws.cell(row=r,column= 7).value = v(m,'contact_mothers_name')
+#                 ws.cell(row=r,column= 8).value = v(m,'contact_mobile_mum')
+#                 ws.cell(row=r,column= 9).value = v(m,'contact_email_mum')
+#                 ws.cell(row=r,column=10).value = v(m,'contact_fathers_name')
+#                 ws.cell(row=r,column=11).value = v(m,'contact_mobile_dad')
+#                 ws.cell(row=r,column=12).value = v(m,'contact_email_dad')
+#                 ws.cell(row=r,column=13).value = v(m,'contact_alt_email')
+#                 r += 1
+#         else:
+#             r = 2
+#             for m in mlist:
+#                 ws.cell(row=r,column= 1).value = v(m,'first_name')+" "+v(m,'last_name')
+#                 ws.cell(row=r,column= 2).value = v(m,'unit')
+#                 ws.cell(row=r,column= 3).value = v(m,'address_1')+", "+v(m,'postcode')+" "+v(m,'town')
+#                 ws.cell(row=r,column= 4).value = v(m,'contact_home_phone')
+#                 ws.cell(row=r,column= 5).value = v(m,'contact_mobile_phone')
+#                 ws.cell(row=r,column= 6).value = v(m,'email')
+#                 ws.cell(row=r,column= 7).value = v(m,'contact_alt_email')
+#                 r += 1
+#         ws = wb.create_sheet()
+# #     wb.remove_sheet(ws)     # Remove empty sheet
+#     wb.remove(ws)     # Remove empty sheet
+#     save_file("Kontaktlista.xlsx",save_virtual_workbook(wb))
 
 def ledarlista(memdata):
     def v(m,f):
