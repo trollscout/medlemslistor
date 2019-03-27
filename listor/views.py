@@ -29,13 +29,14 @@ avdelningar = ['Småkrypen','Sagodjuren', 'Husdjuren', 'Fabeldjuren', 'Skogsdjur
 grenar = {'Spårare':['Sagodjuren', 'Husdjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
 
 def mk_listor(memdata):
-    avdelningslistor(memdata)
-    grenlistor(memdata)
-    allepost(memdata)
-    kontaktlista(memdata)
-    ledarlista(memdata)
-    telefonlista(memdata)
-    wsj19lista(memdata)
+#     avdelningslistor(memdata)
+#     grenlistor(memdata)
+#     allepost(memdata)
+#     kontaktlista(memdata)
+#     ledarlista(memdata)
+#     telefonlista(memdata)
+#     wsj19lista(memdata)
+    sommar19lista(memdata)
 # #     testlista(memdata)
 
 def testlista(memdata):
@@ -129,6 +130,28 @@ def wsj19lista(memdata):
     for l in elist:
         data += l+";\n"
     save_file("wsj19.txt",data.encode(encoding="utf-8", errors="strict"))
+
+def sommar19lista(memdata):
+    def v(m,f):
+        return memdata[m][f]['value'] if f in memdata[m] else ""
+
+    deltlist = ["3237511","3249106","3258930","3275653","3264482","3275606","3323929","3252351","3236153","3291427","3239306","3277549",
+                "3275150","3252064","3291380","3277616","3318013","3325804","3257963","3236899","3234914","3264321","3257965","3236156"]
+    
+    elist = set()
+    for m in deltlist:
+        if v(m,'email') != "": 
+            elist.add(v(m,'email'))
+        if v(m,'contact_email_mum') != "" :
+            elist.add(v(m,'contact_email_mum'))
+        if v(m,'contact_email_dad') != "":
+            elist.add(v(m,'contact_email_dad'))
+        if v(m,'contact_alt_email') != "":
+            elist.add(v(m,'contact_alt_email'))
+    data = ""
+    for l in elist:
+        data += l+";\n"
+    save_file("sommarläger19.txt",data.encode(encoding="utf-8", errors="strict"))
 
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
