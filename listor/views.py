@@ -29,13 +29,13 @@ avdelningar = ['Småkrypen','Sagodjuren', 'Husdjuren', 'Fabeldjuren', 'Skogsdjur
 grenar = {'Spårare':['Sagodjuren', 'Husdjuren'], 'Upptäckare':['Fabeldjuren', 'Skogsdjuren'], 'Äventyrare':['Urdjuren', 'Rovdjuren'], 'Utmanare':['Slow Fox']}
 
 def mk_listor(memdata):
-#     avdelningslistor(memdata)
-#     grenlistor(memdata)
-#     allepost(memdata)
-#     kontaktlista(memdata)
-#     ledarlista(memdata)
-#     telefonlista(memdata)
-#     wsj19lista(memdata)
+    avdelningslistor(memdata)
+    grenlistor(memdata)
+    allepost(memdata)
+    kontaktlista(memdata)
+    ledarlista(memdata)
+    telefonlista(memdata)
+    wsj19lista(memdata)
     sommar19lista(memdata)
 # #     testlista(memdata)
 
