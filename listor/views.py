@@ -136,7 +136,9 @@ def sommar19lista(memdata):
         return memdata[m][f]['value'] if f in memdata[m] else ""
 
     deltlist = ["3237511","3249106","3258930","3275653","3264482","3275606","3323929","3252351","3236153","3291427","3239306","3277549",
-                "3275150","3252064","3291380","3277616","3318013","3325804","3257963","3236899","3234914","3264321","3257965","3236156"]
+                "3275150","3252064","3291380","3277616","3318013","3325804","3257963","3236899","3234914","3264321","3257965","3236156",
+                "3261071","3275828","3234913","3277212","3252118","3274216","3252127","3306182","3280101","3317638","3263786","3264106","3305079","3264317",
+                "3333017","3264514","3180862","3197850","3307450","3180762"]
     
     elist = set()
     for m in deltlist:
@@ -151,7 +153,7 @@ def sommar19lista(memdata):
     data = ""
     for l in elist:
         data += l+";\n"
-    save_file("sommarläger19.txt",data.encode(encoding="utf-8", errors="strict"))
+    save_file("Klarälven19.txt",data.encode(encoding="utf-8", errors="strict"))
 
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
