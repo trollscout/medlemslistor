@@ -1,4 +1,0 @@
-Django==2.1.7
-openpyxl==2.5.5
-dropbox==9.0.0
-google-api-python-client==1.7.4
