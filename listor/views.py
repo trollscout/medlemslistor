@@ -43,6 +43,7 @@ def mk_listor(memdata):
         "3262806": {"VEM":"Simon Vallin", "VAR":"Gosedjuren"},
         "2001383": {"VEM":"Oskar Grönman", "VAR":"Gosedjuren"},
         "3275813": {"VEM":"Miamaria Broberg", "VAR":"Gosedjuren"},
+        "3226730": {"VEM":"Isak Ahlberg", "VAR":"Gosedjuren"},
         "3202688": {"VEM":"Ludvig Jogmark", "VAR":"Rovdjuren"}
         }
     for mx in extra_leaders:
