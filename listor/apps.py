@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class SorteraConfig(AppConfig):
+class ListorConfig(AppConfig):
     name = 'listor'

@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
+from django.shortcuts import render
 
-'''
-Created on 7 apr. 2017
+# Create your views here.
 
-@author: perhk
-'''
 
 import os
 
@@ -37,7 +34,7 @@ def mk_listor(memdata):
 
     extra_leaders = {
         "3291427": {"VEM":"Hanna Norström", "VAR":"Urdjuren"},
-        "3258930": {"VEM":"Dick Börnesson", "VAR":"Skogsdjuren"},
+        "3258930": {"VEM":"Dick Börnesson", "VAR":"Slow Fox"},
         "3239306": {"VEM":"Ida Rosengren", "VAR":"Fabeldjuren"},
         "3254565": {"VEM":"Johannes Moberg", "VAR":"Gosedjuren"},
         "3262806": {"VEM":"Simon Vallin", "VAR":"Gosedjuren"},
@@ -305,11 +302,13 @@ def telefonlista(memdata):
 
 # Droxbox upload function
 
-import dropbox
-
-DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'NO DEFAULT!')
-DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
+# import dropbox
+# 
+# DBX_OAUTHKEY = os.getenv('DBX_OAUTHKEY', 'NO DEFAULT!')
+# DBX_BASEDIR = "/Aktuella kontakt- och e-postlistor/"
 # GDRIVE_BASEDIR = "1HGb1JHNFx5-GxrTbzyK7RpQr5DID8FXS"
+
+
 AVDELNINGSDOKUMENT_ID = "0B4TmjLu89np8NkRoLWd3VVU2ZUE"
 
 from .gdrive import GDrive
